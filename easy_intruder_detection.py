@@ -72,7 +72,7 @@ def send_alert_notification(sender_email, receiver_email, password_email,frame):
         server.login(sender_email, password_email)
         server.sendmail(sender_email, receiver_email, text)
     print('[INFO] email send')
-    print('[INFO] System entering sleeping mode for 2min')
+    print('[INFO] System entering sleeping mode for a moment')
 
 def predict_yolo(frame, model, img_size, device):
     nms_thres = 0.5
@@ -177,26 +177,24 @@ if __name__ == '__main__':
         for (x, y, w, h) in rects:
             rect = [x,y,x+w,y+h]
             cv2.rectangle(frame, (rect[0], rect[1]),  (rect[2], rect[3]), (0,0,255), thickness=1)
-            cv2.putText(frame, 'intruder', (rect[0], rect[1] - 2), 0, 1, [225, 255, 255], thickness=1, lineType=cv2.LINE_AA)
+            cv2.putText(frame, 'intruder', (rect[0], rect[1] - 10), 0, 1, [0,0, 255], thickness=1, lineType=cv2.LINE_AA)
 
         if detection == 0:
             detection_status = 'Active'
         else:
             detection_status = 'Email system restart in {}/{}'.format(detection,number_of_frame_to_pass_after_email_sent)
+
+        if len(rects)>0 or 0 < detection < 50:
+            intruder_status= 'Detected !'
+        else:
+            intruder_status = 'No Detected'
         info = [
             ("Status", status),
-            ('Detection', detection_status)
+            ('Detection', detection_status),
+            ('Intruder', intruder_status)
         ]
 
-        for (i, (k, v)) in enumerate(info):
-            text = "{}: {}".format(k, v)
-            if v == "Intruder Detected !":
-                cv2.putText(frame, text, (10, H - ((i * 20) + 20)),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-            else:
-                cv2.putText(frame, text, (10, H - ((i * 20) + 20)),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-        cv2.imshow("Frame", frame)
+
         key = cv2.waitKey(1) & 0xFF
         if key == ord("q"):
             break
@@ -205,6 +203,17 @@ if __name__ == '__main__':
         if len(rects) > 0 and send_email and detection == 0:
             send_alert_notification(sender_email, receiver_email, password_email, frame)
             detection = 1
+
+        for (i, (k, v)) in enumerate(info):
+            text = "{}: {}".format(k, v)
+            if v == "Detected !":
+                cv2.putText(frame, text, (int(W*0.15), int(H*0.2)),
+                            cv2.FONT_HERSHEY_DUPLEX, 2, (0, 0, 255), 2)
+            else:
+                cv2.putText(frame, text, (10, H - ((i * 20) + 20)),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+        cv2.imshow("Frame", frame)
+
         if 0 < detection < number_of_frame_to_pass_after_email_sent:
             detection += 1
         else:
