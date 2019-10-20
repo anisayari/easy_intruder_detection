@@ -36,5 +36,6 @@ python -s 20 -re < receiver_email > -se < sender_email > -pe < password_sender_e
 
 ## License
 
-This project is licensed under the GPL3 License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GPL3 License - see the [LICENSE.md](LICENSE.md) file for details.
+
 Reference for Pytorch Yolov3 implementation : https://github.com/ultralytics/yolov3
