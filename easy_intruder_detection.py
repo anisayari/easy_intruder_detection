@@ -117,7 +117,7 @@ def predict_yolo(frame, model, img_size, device):
 
 def init_yolo():
     weights,  view_img = 'yolov3/weights/yolov3-spp.weights', 'store_true'
-    device = torch_utils.select_device(device='cpu')
+    device = torch_utils.select_device()
     img_size = 416
     model = Darknet('yolov3/cfg/yolov3-spp.cfg', img_size)
     attempt_download(weights)
@@ -158,7 +158,8 @@ if __name__ == '__main__':
     flag = False
     draw_line = False
     print("[INFO] Starting system")
-    video_capture = cv2.VideoCapture(0)
+    #video_capture = cv2.VideoCapture(0)
+    video_capture = cv2.VideoCapture('video_demo.mp4')
     fps = FPS().start()
     detection = 0
     while True:
@@ -207,7 +208,7 @@ if __name__ == '__main__':
         for (i, (k, v)) in enumerate(info):
             text = "{}: {}".format(k, v)
             if v == "Detected !":
-                cv2.putText(frame, text, (int(W*0.15), int(H*0.2)),
+                cv2.putText(frame, text, (int(W*0.15), int(H*0.7)),
                             cv2.FONT_HERSHEY_DUPLEX, 2, (0, 0, 255), 2)
             else:
                 cv2.putText(frame, text, (10, H - ((i * 20) + 20)),

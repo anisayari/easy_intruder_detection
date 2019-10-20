@@ -1,8 +1,16 @@
-# Easy Intruder Recognition (Pytorch + CPU + Yolov3 + email notif)
+# Easy Intruder Recognition (Pytorch + Yolov3 + email notif)
 
-Detect person and send an email notification
+Detect person from webcam stream and send an email notification
 ![Alt Text](readme.gif)
 
+### IMPORTANT NOTICE
+**IMPORTANT** This app is just a **playground** and should not be used for security purpose.
+
+**IMPORTANT** Be sure to use a GMAIL adress as email notification sender.
+
+**IMPORTANT** Start on webcam.
+
+**IMPORTANT** Run by default on GPU and on CPU is no GPU available.
 
 ### Prerequisites
 
@@ -14,7 +22,6 @@ Make sure to have the following libraries installed in your Python environment:
 - numpy
 - imutils
 
-**IMPORTANT** Be sure to use a GMAIL adress as email notification sender.
 
 ## Run
 ```
