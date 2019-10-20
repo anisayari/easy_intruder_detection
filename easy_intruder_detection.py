@@ -158,8 +158,8 @@ if __name__ == '__main__':
     flag = False
     draw_line = False
     print("[INFO] Starting system")
-    #video_capture = cv2.VideoCapture(0)
-    video_capture = cv2.VideoCapture('video_demo.mp4')
+    video_capture = cv2.VideoCapture(0)
+    #video_capture = cv2.VideoCapture('video_demo.mp4')
     fps = FPS().start()
     detection = 0
     while True:
